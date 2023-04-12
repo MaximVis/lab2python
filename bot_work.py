@@ -65,7 +65,7 @@ async def riddlermain(message: types.Message, state: FSMContext):
 async def riddlerrand(message: types.Message, state: FSMContext):#подпрограмма в которой бот создает случайное число в определенном интервале
     data = await state.get_data()
     if data['min'] >= data['max']:
-        await message.answer("вы меня обманули!")
+        await message.answer("вы меня обманули! Игра окончена")
         await state.finish()
         return
     sluchaenoechislo = randint(data['min'], data['max'])
@@ -85,6 +85,7 @@ async def riddlertry(message: types.Message, state: FSMContext):
             await state.update_data(max=data["sluchaen"]-1)
             await riddlerrand(message, state)
         elif message.text == "угадал":
+            await message.answer("Я угадал число, игра окончена")
             await state.finish()
     else:
         await message.answer("введите корректную команду")
